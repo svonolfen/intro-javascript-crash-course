@@ -27,7 +27,7 @@ const getSequence = function (count) {
 const getAdults = function (people) {
   return people
     .filter(person => person.age > 18)
-    .map(adult => adult.firstName + " " + adult.surname)
+    .map(adult => `${adult.firstName} ${adult.surname}`)
     .join(', ')
 };
 
