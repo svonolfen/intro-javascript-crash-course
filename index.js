@@ -7,16 +7,18 @@ const getName = function () {
   };
   const getName = obj.getName;
 
-  return getName();
+  return getName.bind(obj)();
 };
 
 const getSequence = function (count) {
   const numberGetters = [];
 
+  //alternative: use let instead of var - creates closure
   for (var i = 1; i <= count; i += 1) {
-    numberGetters.push(function() {
-      return i;
-    });
+    numberGetters.push(
+      (function (j) {
+        return () => j;
+      })(i));
   }
 
   return numberGetters.map(numberGetter => numberGetter());
@@ -24,20 +26,20 @@ const getSequence = function (count) {
 
 const getAdults = function (people) {
   return people
-    .filter(person => true)
-    .map(adult => adult.firstName)
+    .filter(person => person.age > 18)
+    .map(adult => adult.firstName + " " + adult.surname)
     .join(', ')
 };
 
 const fetchData = function (userId, callback) {
-  const data = {name: 'Carl', surname: 'Gustav', title: 'king'};
+  const data = { name: 'Carl', surname: 'Gustav', title: 'king' };
 
-  setTimeout(function() {
+  setTimeout(function () {
     if (Number.isFinite(userId)) {
-      callback(data);
+      callback(null, data);
     }
 
-    callback(new Error('Bad request'));
+    callback(new Error('Bad request'), null);
   }, 1);
 };
 
