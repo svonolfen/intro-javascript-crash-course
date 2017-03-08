@@ -5,9 +5,7 @@ const getName = function () {
       return this.name;
     }
   };
-  const getName = obj.getName;
-
-  return getName.bind(obj)();
+  return obj.getName();
 };
 
 const getSequence = function (count) {
